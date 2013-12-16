@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8FD4E19F-28B0-4EEA-AFAA-7B273E6AB5B9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IPMessagerNet</RootNamespace>
+    <AssemblyName>飞鸽传书.Net</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationIcon>ExeIcon.ico</ApplicationIcon>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <StartupObject />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>true</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <DisallowUrlActivation>true</DisallowUrlActivation>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\ConfigPanelBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="API\IConfigMenuItem.cs" />
+    <Compile Include="API\ILogProvider.cs" />
+    <Compile Include="API\IPluginUI.cs" />
+    <Compile Include="API\PluginBase.cs" />
+    <Compile Include="Cache\ControlCache.cs" />
+    <Compile Include="Config\ChatAreaConfig.cs" />
+    <Compile Include="Config\ChatContentStyle.cs" />
+    <Compile Include="Config\ClientConfig.cs" />
+    <Compile Include="Config\ClientFunctionConfig.cs" />
+    <Compile Include="Config\HostInfoConfig.cs" />
+    <Compile Include="Config\SoundConfig.cs" />
+    <Compile Include="Core\HostInfoManager.cs" />
+    <Compile Include="Core\ProfileManager.cs" />
+    <Compile Include="Core\ServiceManager.cs" />
+    <Compile Include="Env.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Embed\ControlHelper.cs" />
+    <Compile Include="_Embed\DragFileEventArgs.cs" />
+    <Compile Include="_Embed\DragFileEventHandler.cs" />
+    <Compile Include="_Embed\FadeEffectComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="_Embed\ImageHelper.cs" />
+    <Compile Include="_Embed\FunctionalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_Embed\FunctionalUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="_Embed\HorizontalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="_Embed\HorizontalLine.Designer.cs">
+      <DependentUpon>HorizontalLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_Embed\IconHelper.cs" />
+    <Compile Include="_Embed\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_Embed\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_Embed\PerPixelAlphaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_Embed\ProgressIdentifier.cs" />
+    <Compile Include="_Embed\SlideComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="_Embed\ValueExtract.cs" />
+    <Compile Include="_Embed\WaitingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_Embed\WaitingDialog.Designer.cs">
+      <DependentUpon>WaitingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_Embed\WebBrowserEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\ChatArea.resx">
+      <DependentUpon>ChatArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\AdvanceConfigPanel.resx">
+      <DependentUpon>AdvanceConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\AudioConfigPanel.resx">
+      <DependentUpon>AudioConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\ConfigPanelHome.resx">
+      <DependentUpon>ConfigPanelHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\FileConfigPanel.resx">
+      <DependentUpon>FileConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\GeneralConfigPanel.resx">
+      <DependentUpon>GeneralConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\HostConfigPanel.resx">
+      <DependentUpon>HostConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\NetworkConfigPanel.resx">
+      <DependentUpon>NetworkConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\NotifyConfigPanel.resx">
+      <DependentUpon>NotifyConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\PluginsConfigPanel.resx">
+      <DependentUpon>PluginsConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\SecurityConfigPanel.resx">
+      <DependentUpon>SecurityConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\StateConfigPanel.resx">
+      <DependentUpon>StateConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\TestingConfigPanel.resx">
+      <DependentUpon>TestingConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Config\ThemeConfigPanel.resx">
+      <DependentUpon>ThemeConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\HostTreeView\HostTreeView.resx">
+      <DependentUpon>HostTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Editor\TextEditor.resx">
+      <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Config\UserGroupListEditor.resx">
+      <DependentUpon>UserGroupListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\HostListEditor.resx">
+      <DependentUpon>HostListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\ModifyHostGroupAndMemo.resx">
+      <DependentUpon>ModifyHostGroupAndMemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Notify\FetchFolderInfo.resx">
+      <DependentUpon>FetchFolderInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Notify\FileShare\SendTaskExpires.resx">
+      <DependentUpon>SendTaskExpires.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Notify\FileShare\SendTaskRelease.resx">
+      <DependentUpon>SendTaskRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Notify\InitializeError.resx">
+      <DependentUpon>InitializeError.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\Notify\AboutIPM.resx">
+      <DependentUpon>AboutIPM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\FrameContainer.resx">
+      <DependentUpon>FrameContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\HostView.resx">
+      <DependentUpon>HostView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\ControlContainer.resx">
+      <DependentUpon>ControlContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\SysConfig.resx">
+      <DependentUpon>SysConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="_Embed\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_Embed\WaitingDialog.resx">
+      <DependentUpon>WaitingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="UI\Comp\SoundManager.cs" />
+    <Compile Include="UI\Controls\Config\AdvanceConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\AdvanceConfigPanel.Designer.cs">
+      <DependentUpon>AdvanceConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\AudioConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\AudioConfigPanel.Designer.cs">
+      <DependentUpon>AudioConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\AutoUpdaePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\AutoUpdaePanel.Designer.cs">
+      <DependentUpon>AutoUpdaePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\ConfigPanelHome.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\ConfigPanelHome.Designer.cs">
+      <DependentUpon>ConfigPanelHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\FileConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\FileConfigPanel.Designer.cs">
+      <DependentUpon>FileConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\HostConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\HostConfigPanel.Designer.cs">
+      <DependentUpon>HostConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\AudioConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\NetworkConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\NetworkConfigPanel.Designer.cs">
+      <DependentUpon>NetworkConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\NotifyConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\NotifyConfigPanel.Designer.cs">
+      <DependentUpon>NotifyConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\PluginConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\PluginsConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\PluginsConfigPanel.Designer.cs">
+      <DependentUpon>PluginsConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\SecurityConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\SecurityConfigPanel.Designer.cs">
+      <DependentUpon>SecurityConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\StateConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\AutoUpdateConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\StateConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\StateConfigPanel.Designer.cs">
+      <DependentUpon>StateConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\TestingConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\PluginsConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\AdvanceConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\NotifyConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\NetworkConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\FileConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\SecurityConfigMenuItem.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UI\Base\DialogBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Comp\NotifyIconManager.cs" />
+    <Compile Include="UI\Controls\ChatArea.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ChatArea.Designer.cs">
+      <DependentUpon>ChatArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Chat\ChatContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="API\IChatService.cs" />
+    <Compile Include="UI\Controls\Chat\IEView\IETabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Chat\IEView\WebBrowserExtend.cs" />
+    <Compile Include="UI\Controls\Config\ExListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\GeneralConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\GeneralConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\GeneralConfigPanel.Designer.cs">
+      <DependentUpon>GeneralConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\HostConfigMenuItem.cs" />
+    <Compile Include="API\IEditorService.cs" />
+    <Compile Include="UI\Controls\Config\TestingConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\TestingConfigPanel.Designer.cs">
+      <DependentUpon>TestingConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Config\ThemeConfigMenuItem.cs" />
+    <Compile Include="UI\Controls\Config\ThemeConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Config\ThemeConfigPanel.Designer.cs">
+      <DependentUpon>ThemeConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\HostTreeView\HostAddressNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostCollectionBase.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostEncryptNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostFileTransferNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostGroupCollectionNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostInfoNodeBase.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostIPCollectionNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostNameNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostShareNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostStatusNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\HostTreeView\HostUserDefineCollectionNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\HostVersionNode.cs" />
+    <Compile Include="UI\Controls\HostTreeView\ListConfig.cs" />
+    <Compile Include="UI\Controls\SideBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Editor\TextEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Editor\TextEditor.Designer.cs">
+      <DependentUpon>TextEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\Config\UserGroupListEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Config\UserGroupListEditor.Designer.cs">
+      <DependentUpon>UserGroupListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\HostListEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\HostListEditor.Designer.cs">
+      <DependentUpon>HostListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\ModifyHostGroupAndMemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\ModifyHostGroupAndMemo.Designer.cs">
+      <DependentUpon>ModifyHostGroupAndMemo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\FetchFolderInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\FetchFolderInfo.Designer.cs">
+      <DependentUpon>FetchFolderInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\FileShare\SendTaskExpires.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\FileShare\SendTaskExpires.Designer.cs">
+      <DependentUpon>SendTaskExpires.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\FileShare\SendTaskRelease.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\FileShare\SendTaskRelease.Designer.cs">
+      <DependentUpon>SendTaskRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\InitializeError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\InitializeError.Designer.cs">
+      <DependentUpon>InitializeError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Base\FormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\AboutIPM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Notify\AboutIPM.Designer.cs">
+      <DependentUpon>AboutIPM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EditorControls\CheckBoxEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\EditorControls\ImageLoader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\EditorControls\NumbericUpDownEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\EditorControls\TextBoxEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ChatView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ChatView.Designer.cs">
+      <DependentUpon>ChatView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\FrameContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\FrameContainer.Designer.cs">
+      <DependentUpon>FrameContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\HostView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\HostView.Designer.cs">
+      <DependentUpon>HostView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\FrameContainerConfig.cs" />
+    <Compile Include="UI\Forms\ControlContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ControlContainer.Designer.cs">
+      <DependentUpon>ControlContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\SysConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\SysConfig.Designer.cs">
+      <DependentUpon>SysConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="API\IPlugins.cs" />
+    <Compile Include="API\PluginsBase.cs" />
+    <Compile Include="Utility\Convertor.cs" />
+    <Compile Include="Utility\Helper.cs" />
+    <Compile Include="Utility\HostSortComarer_Status.cs" />
+    <Compile Include="Utility\HostSortComarer_IP.cs" />
+    <Compile Include="Utility\HostSortComarer_Name.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExeIcon.ico" />
+    <Content Include="Themes\Default\16px_icons\config_advanced.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_audio.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_general.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_hostlist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_network.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_notify.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_plugins.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_security.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_state.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_themes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\16px_icons\config_update.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Animation\loading.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Chat\IEView\chat.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Chat\IEView\jquery.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Chat\IEView\Main.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Chat\IEView\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\FormIcon\AboutIPM.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\FormIcon\FrameContainer.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\FormIcon\HostListContainer.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\FormIcon\InitializeError.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\HostTreeView.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Icons\SysConfig.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Icons\topmost.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Icon\Alert.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Icon\MainForm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Images\about.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Images\tip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\NotifyIcon\Absence.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\NotifyIcon\Mute.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\NotifyIcon\NewMessage.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\NotifyIcon\Online.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\preview.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Signal\Alert.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Signal\testtip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\SkinInfo.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\sounds\fileerror.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\sounds\filesucc.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\sounds\newfile.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\sounds\newmsg.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\sounds\offline.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\sounds\online.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Toolbar\ButtonImage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Toolbar\ChatArea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Toolbar\HostTreeView.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Toolbar\HostTreeViewTool.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Toolbar\HostViewToolBar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Default\Toolbar\NotifyIconManager.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\ButtonImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.VisualBasic.PowerPacks.10.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Basic PowerPacks 10.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="ExeIcon.ico">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\Default\Chat\IEView\images\" />
+    <Folder Include="UI\Plugins\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FSLib.IPMessager\FSLib.IPMessager.csproj">
+      <Project>{E86FEBC4-2100-44BB-8703-78DB3845E726}</Project>
+      <Name>FSLib.IPMessager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
