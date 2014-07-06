@@ -220,7 +220,7 @@ namespace FSLib.IPMessager
 
 
 			//开始构造对象
-			Commander = new CommandExecutor(cfg);
+			Commander = new CommandExecutor(this);
 			Commander.Init();
 
 			//初始化插件

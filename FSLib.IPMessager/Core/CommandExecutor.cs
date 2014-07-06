@@ -15,12 +15,14 @@ namespace FSLib.IPMessager.Core
 	/// </summary>
 	public class CommandExecutor : IDisposable
 	{
+		IPMClient _client;
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		internal CommandExecutor(Config cfg)
+		internal CommandExecutor(IPMClient client)
 		{
-			this.Config = cfg;
+			_client = client;
+			this.Config = client.Config;
 		}
 
 
@@ -29,7 +31,7 @@ namespace FSLib.IPMessager.Core
 		/// </summary>
 		public void Init()
 		{
-			Client = new UDPThread(this.Config.BindedIP, this.Config.Port);			//文本网络对象
+			Client = new UDPThread(_client);			//文本网络对象
 			LivedHost = new OnlineHost(this.Config);								//主机列表
 			MessageProxy = new MessageTranslator(Client, this.Config, LivedHost);	//文本信息翻译层对象
 
@@ -42,7 +44,7 @@ namespace FSLib.IPMessager.Core
 			//文件传输
 			FileTaskManager = new FileTaskManager(this.Config);
 			FileTaskManager.FileReceiveTaskDiscarded += (s, e) => this.SendReleaseFilesSignal(e.TaskInfo.RemoteHost, e.TaskInfo.PackageID);
-			FileTaskModule = new FSLib.IPMessager.Network.TCPThread(Config)
+			FileTaskModule = new FSLib.IPMessager.Network.TCPThread(_client)
 			{
 				TaskManager = FileTaskManager
 			};

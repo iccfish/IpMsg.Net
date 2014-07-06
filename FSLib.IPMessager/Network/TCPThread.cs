@@ -21,15 +21,17 @@ namespace FSLib.IPMessager.Network
 		#region 私有变量
 
 		TcpListener listener;
+		IPMClient _client;
 
 		#endregion
 
 
-		internal TCPThread(Config config)
+		internal TCPThread(IPMClient client)
 		{
 			IsInitialized = false;
-			this.Config = config;
-			config.EnableFileTransfer = false;
+			_client = client;
+			this.Config = client.Config;
+			Config.EnableFileTransfer = false;
 
 			try
 			{
@@ -38,7 +40,7 @@ namespace FSLib.IPMessager.Network
 				};
 				StartListener();
 				IsInitialized = true;
-				config.EnableFileTransfer = true;
+				Config.EnableFileTransfer = true;
 			}
 			catch (Exception)
 			{
@@ -130,7 +132,7 @@ namespace FSLib.IPMessager.Network
 		{
 			if (FileSystemOperationError == null) return;
 
-			IpmEvents.OnTcpThreadFileSystemOperationError(this, e);
+			IpmEvents.OnTcpThreadFileSystemOperationError(_client, e);
 
 			if (!IPMClient.NeedPostMessage)
 			{

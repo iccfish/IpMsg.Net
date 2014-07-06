@@ -37,12 +37,12 @@ namespace FSLib.IPMessager.Network
 		/// </summary>
 		/// <param name="ip">绑定的IP</param>
 		/// <param name="port">绑定的端口</param>
-		internal UDPThread(IPMClient ipmClient, IPAddress ip, int port)
+		internal UDPThread(IPMClient ipmClient)
 		{
 			IsInitialized = false;
 			try
 			{
-				client = new UdpClient(new IPEndPoint(ip, port));
+				client = new UdpClient(new IPEndPoint(ipmClient.Config.BindedIP, ipmClient.Config.Port));
 			}
 			catch (Exception)
 			{
