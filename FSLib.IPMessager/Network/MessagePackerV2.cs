@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Text;
+using System.Threading;
 using FSLib.IPMessager.Define;
 using System.Net;
 using FSLib.IPMessager.Entity;
@@ -14,6 +17,13 @@ namespace FSLib.IPMessager.Network
 	/// <remarks>这个版本的封包消息飞鸽传书VC版是不支持的</remarks>
 	class MessagePackerV2
 	{
+		Timer _timer;
+
+		public MessagePackerV2()
+		{
+			_timer = new Timer(_ => CheckForOutdateMessage(), null, new TimeSpan(0, 5, 0), new TimeSpan(0, 0, 5, 0));
+		}
+
 		/*
 		 * 版本2消息包注意：
 		 * 1.第一位始终是2(ASCII码50)
@@ -88,11 +98,11 @@ namespace FSLib.IPMessager.Network
 			options |= (ulong)Define.Consts.Cmd_Send_Option.Content_Unicode;
 
 			//每次发送所能容下的数据量
-			int maxBytesPerPackage = Define.Consts.MAX_UDP_PACKAGE_LENGTH - PackageHeaderLength;
+			var maxBytesPerPackage = Define.Consts.MAX_UDP_PACKAGE_LENGTH - PackageHeaderLength;
 			//压缩数据流
-			System.IO.MemoryStream ms = new System.IO.MemoryStream();
-			System.IO.Compression.GZipStream zip = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionMode.Compress);
-			System.IO.BinaryWriter bw = new System.IO.BinaryWriter(zip, System.Text.Encoding.Unicode);
+			var ms = new System.IO.MemoryStream();
+			var zip = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionMode.Compress);
+			var bw = new System.IO.BinaryWriter(zip, System.Text.Encoding.Unicode);
 			//写入头部数据
 			bw.Write(packageNo);						//包编号
 			bw.Write(((ulong)command) | options);		//命令|选项
@@ -112,15 +122,15 @@ namespace FSLib.IPMessager.Network
 			ms.Seek(0, System.IO.SeekOrigin.Begin);
 
 			//打包数据总量
-			int dataLength = (int)ms.Length;
+			var dataLength = (int)ms.Length;
 
-			int packageCount = (int)Math.Ceiling(dataLength * 1.0 / maxBytesPerPackage);
-			Entity.PackedNetworkMessage[] pnma = new PackedNetworkMessage[packageCount];
-			for (int i = 0; i < packageCount; i++)
+			var packageCount = (int)Math.Ceiling(dataLength * 1.0 / maxBytesPerPackage);
+			var pnma = new PackedNetworkMessage[packageCount];
+			for (var i = 0; i < packageCount; i++)
 			{
-				int count = i == packageCount - 1 ? dataLength - maxBytesPerPackage * (packageCount - 1) : maxBytesPerPackage;
+				var count = i == packageCount - 1 ? dataLength - maxBytesPerPackage * (packageCount - 1) : maxBytesPerPackage;
 
-				byte[] buf = new byte[count + PackageHeaderLength];
+				var buf = new byte[count + PackageHeaderLength];
 				buf[0] = VersionHeader;
 				BitConverter.GetBytes(packageNo).CopyTo(buf, 1);
 				BitConverter.GetBytes(dataLength).CopyTo(buf, 9);
@@ -163,6 +173,46 @@ namespace FSLib.IPMessager.Network
 		static Dictionary<ulong, Entity.PackedNetworkMessage[]> packageCache = new Dictionary<ulong, PackedNetworkMessage[]>();
 
 		/// <summary>
+		/// 组合所有的网络数据包并执行解压缩
+		/// </summary>
+		/// <param name="packs"></param>
+		/// <returns></returns>
+		static MemoryStream DecompressMessagePacks(params PackedNetworkMessage[] packs)
+		{
+			try
+			{
+				//尝试解压缩，先排序
+				Array.Sort(packs);
+				var msout = new MemoryStream();
+				using (var ms = new System.IO.MemoryStream())
+				{
+					//合并写入
+					Array.ForEach(packs, s => ms.Write(s.Data, 0, s.Data.Length));
+					ms.Seek(0, SeekOrigin.Begin);
+
+					//解压缩
+					using (var gz = new GZipStream(ms, CompressionMode.Decompress))
+					{
+						var buffer = new byte[0x400];
+						var count = 0;
+						while ((count = gz.Read(buffer, 0, buffer.Length)) > 0)
+						{
+							msout.Write(buffer, 0, count);
+						}
+					}
+				}
+				msout.Seek(0, SeekOrigin.Begin);
+
+				return msout;
+			}
+			catch (Exception)
+			{
+
+				return null;
+			}
+		}
+
+		/// <summary>
 		/// 分析网络数据包并进行转换为信息对象
 		/// </summary>
 		/// <param name="packs">接收到的封包对象</param>
@@ -175,39 +225,27 @@ namespace FSLib.IPMessager.Network
 			if (packs.Length == 0 || (packs[0].PackageCount > 1 && packs.Length != packs[0].PackageCount))
 				return null;
 
-			//尝试解压缩，先排序
-			Array.Sort(packs);
-			//尝试解压缩
-			System.IO.MemoryStream ms = new System.IO.MemoryStream();
-			System.IO.Compression.GZipStream zip = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionMode.Decompress);
-			try
-			{
-				Array.ForEach(packs, s => zip.Write(s.Data, 0, s.Data.Length));
-			}
-			catch (Exception)
+			var ms = DecompressMessagePacks(packs);
+			if (ms == null)
 			{
 				OnDecompressFailed(new DecomprssFailedEventArgs(packs));
 				return null;
 			}
 
-			zip.Close();
-			ms.Flush();
-			ms.Seek(0, System.IO.SeekOrigin.Begin);
-
 			//构造读取流
-			System.IO.BinaryReader br = new System.IO.BinaryReader(ms, System.Text.Encoding.Unicode);
+			var br = new System.IO.BinaryReader(ms, System.Text.Encoding.Unicode);
 
 			//开始读出数据
-			IPMessager.Entity.Message m = new FSLib.IPMessager.Entity.Message(packs[0].RemoteIP);
+			var m = new FSLib.IPMessager.Entity.Message(packs[0].RemoteIP);
 			m.PackageNo = br.ReadUInt64();						//包编号
-			ulong tl = br.ReadUInt64();
+			var tl = br.ReadUInt64();
 			m.Command = (Define.Consts.Commands)(tl & 0xFF);	//命令编码
 			m.Options = tl & 0xFFFFFF00;						//命令参数
 
 			m.UserName = br.ReadString();	//用户名
 			m.HostName = br.ReadString();	//主机名
 
-			int length = br.ReadInt32();
+			var length = br.ReadInt32();
 			m.NormalMsgBytes = new byte[length];
 			br.Read(m.NormalMsgBytes, 0, length);
 
@@ -233,34 +271,33 @@ namespace FSLib.IPMessager.Network
 		public static IPMessager.Entity.Message TryToTranslateMessage(Entity.PackedNetworkMessage pack)
 		{
 			if (pack == null || pack.PackageIndex >= pack.PackageCount - 1) return null;
-			else if (pack.PackageCount == 1) return ParseToMessage(pack);
-			else
+			if (pack.PackageCount == 1) return ParseToMessage(pack);
+
+			lock (packageCache)
 			{
 				if (packageCache.ContainsKey(pack.PackageNo))
 				{
-					Entity.PackedNetworkMessage[] array = packageCache[pack.PackageNo];
+					var array = packageCache[pack.PackageNo];
 					array[pack.PackageIndex] = pack;
 
 					//检测是否完整
+					//TODO 这里没有过期机制.当丢失数据包永远收不到的时候,会发生数据包永远保存在内存中的泄露
+					//TODO 要解决此问题,需要启动定时器定时检查数据包队列,并丢弃过期数据
 					if (Array.FindIndex(array, s => s == null) == -1)
 					{
 						packageCache.Remove(pack.PackageNo);
 						return ParseToMessage(array);
 					}
-					else
-					{
-						return null;
-					}
+					return null;
 				}
 				else
 				{
-					Entity.PackedNetworkMessage[] array = new Entity.PackedNetworkMessage[pack.PackageCount];
+					var array = new Entity.PackedNetworkMessage[pack.PackageCount];
 					array[pack.PackageIndex] = pack;
 					packageCache.Add(pack.PackageNo, array);
 					return null;
 				}
 			}
-
 		}
 
 		/// <summary>
@@ -272,7 +309,7 @@ namespace FSLib.IPMessager.Network
 		{
 			if (!Test(buffer)) return null;
 
-			Entity.PackedNetworkMessage p = new PackedNetworkMessage()
+			var p = new PackedNetworkMessage()
 			{
 				RemoteIP = clientAddress,
 				SendTimes = 0
@@ -286,6 +323,29 @@ namespace FSLib.IPMessager.Network
 			Array.Copy(buffer, PackageHeaderLength, p.Data, 0, p.Data.Length);
 
 			return p;
+		}
+
+		void CheckForOutdateMessage()
+		{
+			lock (packageCache)
+			{
+				//TODO 这里设置最短的过期时间为5分钟，也就是说五分钟之前的消息会被干掉
+				var minTime = DateTime.Now.AddMinutes(5.0);
+				var targetList = new List<ulong>();
+				foreach (var pkgid in packageCache.Keys)
+				{
+					if (Array.TrueForAll(packageCache[pkgid], s => s == null || s.CreationTime < minTime))
+					{
+						targetList.Add(pkgid);
+					}
+				}
+
+				foreach (var pkgid in targetList)
+				{
+					packageCache.Remove(pkgid);
+				}
+			}
+			
 		}
 
 		#region 事件

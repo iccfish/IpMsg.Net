@@ -8,6 +8,7 @@ namespace FSLib.IPMessager.Entity
 	/// </summary>
 	public class PackedNetworkMessage : IComparable<PackedNetworkMessage>
 	{
+
 		/// <summary>
 		/// 封包版本
 		/// </summary>
@@ -51,6 +52,7 @@ namespace FSLib.IPMessager.Entity
 		public PackedNetworkMessage()
 		{
 			Version = 1;
+			CreationTime = DateTime.Now;
 		}
 
 		#region IComparable<PackedNetworkMessage> 成员
@@ -61,5 +63,10 @@ namespace FSLib.IPMessager.Entity
 		}
 
 		#endregion
+
+		/// <summary>
+		/// 获得生成数据包的时间
+		/// </summary>
+		public DateTime CreationTime { get; private set; }
 	}
 }
